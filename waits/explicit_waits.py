@@ -3,14 +3,23 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import *
 
 driver = webdriver.Chrome()
 driver.maximize_window()
 
 # Explicit wait
-wait = WebDriverWait(driver, 30)
-
-driver.implicitly_wait(30)
+# wait = WebDriverWait(driver, 30) basic syntax
+wait = WebDriverWait(
+    driver,
+    30,
+    ignored_exceptions=[
+        NoSuchElementException,
+        ElementNotVisibleException,
+        ElementNotSelectableException,
+        Exception,
+    ],
+)
 
 driver.get("https://www.bing.com/")
 
